@@ -1,0 +1,93 @@
+\documentclass[]{article}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+\graphicspath{ {./slikeZaRI/} }
+\usepackage{xcolor}
+\usepackage{amsmath}
+
+%opening
+\title{Klasterovanje tačaka korišćenjem 
+	genetskog algoritma \vspace{0.5cm} \\ 
+	\large Projekat u okviru kursa Računarska inteligencija \vspace{6cm}}
+ 
+\author{Luka Radenković 59/2018 \\
+	Ermin Škrijelj 194/2018}
+
+\date{Jul 2022}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\renewcommand*\contentsname{Sadržaj}
+\tableofcontents
+\newpage
+
+	\section{Opis problema}
+	Za dati skup ta\v{c}aka points(n-dimenzionog prostora) i zadati broj klastera K potrebno je pronaći adekvatne centre klastera  kojim \'{c}e se po\v{c}etni skup ta\v{c}aka podeliti na odgovaraju\'{c}e klastere.
+	
+	\section{Implementacija}
+	
+	\subsection{Obrada ulaznih podataka}
+	Unos ulaznih podataka je omogu\'{c}en na dva na\v{c}ina:\\ 
+	\-\quad • Slu\v{c}ajnim generisanjem tačaka iz odgovaraju\'{c}ih intervala\\
+	\-\quad • \v{C}itanjem fajlova sa zadate putanje. Fajlovi su formatirani na odgovaraju\'{c}i \\ \-\qquad na\v{c}in(svaki red predstavlja jednu tačku u n-dimenzionom prostoru) \vspace{0.5cm} \\
+	\subsection{Implementacija jedinke}
+	Svaka jedinka u genetskom algoritmu bi\'{c}e predstavljena kao lista dimenzije K gde svaki od elemenata liste je lista dimenzije n
+	(n je dimenzija prostora u kome vr\v{s}imo klasterovanje) i predstavlja centar za jedan od K klastera. \vspace{0.5cm} \\
+	Inicijalna populacija se generi\v{s}e slu\v{c}ajnim izborom p (p-veličina populacije) ta\v{c}aka iz skupa points koji je zadat na po\v{c}etku. \vspace{0.5cm} \\
+	Fitness funkcija je zadata kao jedsn kroz suma kvadratnih rastojanja(SSE) od ta\v{c}aka od odgovarajuceg centra klastera kome ta\v{c}ka pripada.
+	Rastojanja se ra\v{c}unaju euklidski.\\
+	
+	SSE = $\sum_{i=1}^{n} (x_i - \bar x)^{2}$\\ 
+	
+	$ Fitness = \dfrac{1}{SSE}$\\
+	
+	\subsection{Implementacija selekcije, ukr\v{s}tanja i mutacije}
+	\-\quad • Selekcija je implementirana kao turnirska sa veli\v{c}inom turnira 5. \\ \\
+	\-\quad • Kori\v{s}\'{c}eno je jednopoziciono ukr\v{s}tanje ,  pozicija se bira iz intervala [0,duzina jedinke)  i pritom kori\v{s}\'{c}enom  implemetacijom  ne\'{c}e postojati problem nepo\v{z}eljnog pona\v{s}anja u kome je jedinka podeljena tako da različite koordinate iz iste ta\v{c}ke(gena) pripadnu razli\v{c}itim potomcima.\\ \\
+	\-\quad • Mutacijom se vr\v{s}i eksploracija prostora pretrage. Upotrebljena je ideja dodavanja/oduzimanja slu\v{c}ajno generisane vrednosti (iz intervala[0,3])  svakoj koordinati posmatrane ta\v{c}ke ukoliko je slu\v{c}ajno generisana vrednost manja od MUTATION\_RATE koji je 5\% (0.05).\vspace{0.5cm}\\
+	\subsection{Parametri genetskog algoritma}
+	Vrednosti za parametre genetskog algoritma su uglavnom empirijski odredjene. Veli\v{c}ina populacije je 50, broj generacija 30 
+	i elitizmom \v{c}uvamo 20\% najboljih jedinki generacije. 
+	
+
+
+
+	\section{Rezultati}
+	U narednom delu teksta  prikazani su rezultati koje smo dobili za primer input\_test :\\
+	\includegraphics{prva}
+	\vspace{0.5cm}\\Kao poredbeni algoritam koristimo K means algoritam, jer on uglavnom daje optimalna resenja za posmatrani problem klasterovanja.	\vspace{0.5cm}\\
+	Fitness vrednost dobijena kod poredbenog K means algoritma je \textcolor{green}{0,00318645} . \newpage
+	Rezultati dobijeni za veličinu populacije 30 i nepromenjene ostale parametre GA:\vspace{0.5cm}\\
+	Fitness vrednost dobijena za navedene parametre je \textcolor{red}{0,002268748}.\\
+	\includegraphics{druga}
+	\newpage
+	Rezultati dobijeni za veličinu populacije 100  i nepromenjene ostale \\ parametre GA:\\ \\
+	\includegraphics{treca}
+	\vspace{0.5cm}\\Fitness vrednost dobijena za navedene parametre je \textcolor{red}{0,0024967609}. \\
+	
+	\section{Zaklju\v{c}ak}
+	Na osnovu prethodne analize možemo doći do zaključka da povećanjem broja jedinki unutar populacije poboljšava se i kvalitet (fitness vrednost) rešenja samog algoritma i dobijeno rešenje veoma je blizu rešenja uporednog algoritma(K means algoritma)  koji  u najvećem broju slučajeva daje optimalno rešenje.
+	
+	\newpage
+	
+	\begin{thebibliography}{9} 
+		\bibitem{Textbook} 
+		Ujjwal Maulik, Sanghamitra Bandyopadhyay - 
+		\textit{Genetic algorithm-based clustering technique}\\
+		\bibitem{Link} 
+		\href{https://blog.paperspace.com/clustering-using-the-genetic-algorithm/}{using-the-genetic-algorithm}\\
+		\bibitem{Slides} 
+		Slajdovi profesora Nenada Mitića - 
+		\href{http://poincare.matf.bg.ac.rs/~nenad/ip1/13.uvod_u_klaster_analizu.pdf}{Uvod u klaster analizu}
+		
+	\end{thebibliography}
+	
+	
+	
+	
+\end{document}
